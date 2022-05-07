@@ -3,7 +3,9 @@ package emu.grasscutter.command.commands;
 import emu.grasscutter.Grasscutter;
 import emu.grasscutter.command.Command;
 import emu.grasscutter.command.CommandHandler;
+import emu.grasscutter.data.GameData;
 import emu.grasscutter.game.player.Player;
+import emu.grasscutter.server.packet.recv.HandlerEnterWorldAreaReq;
 
 import java.util.List;
 
@@ -23,6 +25,13 @@ public final class SetWorldLevelCommand implements CommandHandler {
             CommandHandler.sendMessage(sender, Grasscutter.getLanguage().SetWorldLevel_usage);
             return;
         }
+
+
+        int AreaID = Integer.parseInt(args.get(0));
+        int WeatherAreaID = GameData.getWeatherAreaIdByAreaId(AreaID);
+        String weatherAreaDebugMsg = String.format("AreaID: %d, corresponding WeatherAreaID: %d", AreaID, WeatherAreaID);
+        CommandHandler.sendMessage(sender, weatherAreaDebugMsg);
+
 
         try {
             int level = Integer.parseInt(args.get(0));
